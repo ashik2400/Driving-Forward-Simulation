@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -c \"import torch; print\\(torch.__file__\\)\")",
+      "Bash(python -c \"import sys; print\\(sys.executable\\)\")",
+      "Bash(export CUDA_HOME=\"C:/Program Files/NVIDIA GPU Computing Toolkit/CUDA/v12.1\")",
+      "Bash(export NVCC_PREPEND_FLAGS=\"--allow-unsupported-compiler\")",
+      "Bash(\"C:/Users/ashik/anaconda3/envs/driving_forward/python.exe\" -m pip install --no-build-isolation -e third_party/gaussian-splatting/submodules/diff-gaussian-rasterization)",
+      "Bash(cat)",
+      "Bash(conda run:*)",
+      "Bash(pip show *)",
+      "Bash(conda env *)",
+      "Bash(pip list *)",
+      "Bash(C:/Users/ashik/anaconda3/envs/driving_forward/python.exe *)"
+    ]
+  }
+}

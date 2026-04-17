@@ -1,0 +1,15 @@
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.env
+data/
+checkpoints/
+outputs/
+third_party/
+*.pt
+*.pth
+*.onnx
+.DS_Store
+Thumbs.db
+notebooks/.ipynb_checkpoints/

@@ -1,0 +1,46 @@
+name: driving_forward
+channels:
+  - pytorch
+  - nvidia
+  - conda-forge
+  - defaults
+
+dependencies:
+  - python=3.9
+  - pytorch=2.5.1
+  - torchvision=0.20.1
+  - pytorch-cuda=12.1
+  - numpy=1.24
+  - scipy
+  - matplotlib
+  - pip
+
+  - pip:
+      # 3D Gaussian Splatting rasterizer (must be built from source)
+      - git+https://github.com/graphdeco-inria/gaussian-splatting.git#subdirectory=submodules/diff-gaussian-rasterization
+      - git+https://github.com/graphdeco-inria/gaussian-splatting.git#subdirectory=submodules/simple-knn
+
+      # Dataset
+      - nuscenes-devkit>=1.1.11
+
+      # Backbone & utilities
+      - timm==0.9.12
+      - einops==0.7.0
+      - opencv-python==4.9.0.80
+
+      # Losses / metrics
+      - lpips==0.1.4
+      - scikit-image==0.22.0
+
+      # Logging & config
+      - tensorboard==2.15.2
+      - PyYAML==6.0.1
+      - tqdm==4.66.2
+      - python-dotenv==1.0.0
+
+      # Optional: Open3D for point-cloud visualisation
+      - open3d==0.18.0
+
+      # Notebook
+      - jupyter
+      - ipywidgets

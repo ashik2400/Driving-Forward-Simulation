@@ -1,0 +1,63 @@
+# Base configuration – mirrors paper settings (requires multi-GPU / large VRAM)
+# Reference: DrivingForward AAAI-2025
+
+# ── Dataset ──────────────────────────────────────────────────────────────────
+dataset:
+  name: nuscenes
+  root: data/nuscenes          # set NUSCENES_ROOT or override here
+  version: v1.0-mini           # v1.0-trainval for full training
+  cameras:
+    - CAM_FRONT
+    - CAM_FRONT_RIGHT
+    - CAM_BACK_RIGHT
+    - CAM_BACK
+    - CAM_BACK_LEFT
+    - CAM_FRONT_LEFT
+  image_height: 352
+  image_width:  640
+  num_temporal_frames: 3       # t-1, t, t+1
+
+# ── Model ─────────────────────────────────────────────────────────────────────
+model:
+  backbone: resnet50           # depth / pose encoder backbone
+  pretrained: true
+  min_depth: 0.1               # metres
+  max_depth: 80.0
+  num_sh_degree: 3             # spherical harmonics degree (colour)
+  gaussian_scale_min: 0.001
+  gaussian_scale_max: 10.0
+  mode: SF                     # SF = single-frame inference; MF = multi-frame
+
+# ── Training ──────────────────────────────────────────────────────────────────
+training:
+  batch_size: 4
+  num_workers: 8
+  epochs: 10
+  lr: 0.0001
+  lr_backbone: 0.00001
+  weight_decay: 0.0001
+  warmup_steps: 500
+  scheduler: cosine
+  gradient_clip: 1.0
+  amp: false                   # automatic mixed precision
+  accum_steps: 1               # gradient accumulation
+  grad_checkpoint: false       # gradient checkpointing
+
+# ── Loss weights ──────────────────────────────────────────────────────────────
+loss:
+  lambda_repro: 1.0
+  lambda_sp: 0.5               # spatial photometric
+  lambda_sp_tm: 0.5            # spatial-temporal photometric
+  lambda_smooth: 0.001         # depth smoothness
+  lambda_render: 1.0
+  lambda_lpips: 0.05
+  ssim_weight: 0.85            # η in paper
+
+# ── Logging ───────────────────────────────────────────────────────────────────
+logging:
+  log_dir: outputs/logs
+  checkpoint_dir: checkpoints
+  save_every: 1                # epochs
+  log_every: 100               # steps
+  val_every: 1                 # epochs
+  num_val_scenes: 10
